@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* [data-state="open"] .dialog-overlay {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(4px); 
+} */
 
 
 @layer base {

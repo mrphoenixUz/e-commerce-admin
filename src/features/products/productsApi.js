@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const productsApi = createApi({
-  reducerPath: 'api',
+  reducerPath: 'productsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:3003',
     prepareHeaders: (headers, { getState }) => {
@@ -12,68 +12,20 @@ export const productsApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Cart', 'User'],
+  tagTypes: ["Products"],
   endpoints: (builder) => ({
-    getProducts: builder.query({
-      query: () => '/products',
-    }),
     getProduct: builder.query({
       query: (id) => `/products/${id}`,
+      providesTags: (id) => [{ type: "Products", id }],
     }),
-    addToCart: builder.mutation({
-      query: (data) => ({
-        url: '/users/cart',
-        method: 'POST',
-        body: data,
-      }),
-      invalidatesTags: ['Cart'],
-    }),
-    updateCartItem: builder.mutation({
-      query: (data) => ({
-        url: '/users/cart',
-        method: 'PUT',
-        body: data,
-      }),
-      invalidatesTags: ['Cart'],
-    }),
-    removeFromCart: builder.mutation({
-      query: (productId) => ({
-        url: `/users/cart/${productId}`,
+    deleteProduct: builder.mutation({
+      query: (categoryId) => ({
+        url: `/products/${categoryId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Cart'],
+      invalidatesTags: [{ type: "Products" }],
     }),
-    addToFavourites: builder.mutation({
-      query: (data) => ({
-        url: `/users/favourites`,
-        method: 'POST',
-        body: data,
-      }),
-    }),
-    removeFromFavourites: builder.mutation({
-      query: (productId) => ({
-        url: `/users/favourites/${productId}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["User"], // This ensures the UI updates automatically
-    }),
-    getCategories: builder.query({
-      query: () => '/categories',
-    }),
-    searchProduct: builder.query({
-      query: (searchTerm) => `/products/search/${searchTerm}`,
-    })
   }),
 });
 
-export const {
-  useGetProductsQuery,
-  useGetProductQuery,
-  useAddToCartMutation,
-  useUpdateCartItemMutation,
-  useRemoveFromCartMutation,
-  useAddToFavouritesMutation,
-  useRemoveFromFavouritesMutation,
-  useGetCategoriesQuery,
-  useSearchProductQuery
-} = productsApi;
+export const { useGetProductQuery, useDeleteProductMutation } = productsApi;

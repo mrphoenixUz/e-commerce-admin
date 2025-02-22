@@ -16,11 +16,18 @@ export const userApi = createApi({
     }),
     tagTypes: ['User'],
     endpoints: (builder) => ({
-        getUser: builder.query({
-            query: () => '/users/profile',
+        getUsers: builder.query({
+            query: () => '/users',
             providesTags: ['User']
-        })
+        }),
+        removeUser: builder.mutation({
+            query: (userId) => ({
+                url: `/users/${userId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['User'],
+        }),
     }),
 });
 
-export const { useGetUserQuery } = userApi;
+export const { useGetUsersQuery, useRemoveUserMutation } = userApi;

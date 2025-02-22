@@ -2,16 +2,9 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
+  ListOrdered,
+  ShoppingBag,
+  User,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -37,7 +30,7 @@ const data = {
     {
       title: "Users",
       url: "#",
-      icon: SquareTerminal,
+      icon: User,
       isActive: true,
       items: [
         {
@@ -49,7 +42,7 @@ const data = {
     {
       title: "Categories",
       url: "#",
-      icon: Bot,
+      icon: ListOrdered,
       items: [
         {
           title: "Categories list",
@@ -60,7 +53,7 @@ const data = {
     {
       title: "Products",
       url: "#",
-      icon: BookOpen,
+      icon: ShoppingBag,
       items: [
         {
           title: "Products list",
