@@ -13,8 +13,8 @@ export function UsersTable() {
     const [removeUser, { isLoading: isDeleting }] = useRemoveUserMutation();
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [selectedUser, setSelectedUser] = useState(null); // Track user for deletion
-    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false); // Track dialog state
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
     useEffect(() => {
         if (allusers) {
@@ -31,8 +31,8 @@ export function UsersTable() {
     const handleDeleteUser = async () => {
         if (selectedUser) {
             await removeUser(selectedUser.id);
-            setUsers((prev) => prev.filter((user) => user.id !== selectedUser.id)); // Remove from UI
-            setIsDeleteDialogOpen(false); // Close modal after deletion
+            setUsers((prev) => prev.filter((user) => user.id !== selectedUser.id));
+            setIsDeleteDialogOpen(false);
         }
     };
 
@@ -58,7 +58,6 @@ export function UsersTable() {
                     {filteredUsers.map((user) => (
                         <TableRow key={user.id}>
                             <TableCell>
-                                {/* Profile Picture Modal */}
                                 <Dialog>
                                     <DialogTrigger asChild>
                                         <Avatar className="cursor-pointer">
@@ -76,7 +75,6 @@ export function UsersTable() {
                             <TableCell>{user.first_name} {user.last_name}</TableCell>
                             <TableCell>{user.email}</TableCell>
                             <TableCell>
-                                {/* Delete Confirmation Dialog */}
                                 <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
                                     <DialogTrigger asChild>
                                         <Button
