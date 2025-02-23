@@ -34,6 +34,7 @@ const LoginPage = () => {
 
             if (response.accessToken && response.user) {
                 localStorage.setItem('token', response.accessToken);
+                localStorage.setItem('user', JSON.stringify(response.user));
                 window.dispatchEvent(new Event("storage"));
 
                 if (response.user.role === 'admin') {

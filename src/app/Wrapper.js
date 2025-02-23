@@ -10,6 +10,7 @@ import {
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function ClientWrapper({ children }) {
     const [hasToken, setHasToken] = useState(false);
@@ -31,6 +32,7 @@ export default function ClientWrapper({ children }) {
                     const isExpired = payload.exp * 1000 < Date.now();
                     if (isExpired) {
                         localStorage.removeItem("token");
+                        localStorage.removeItem("user");
                         setHasToken(false);
                         router.push('/login');
                     } else {
@@ -39,6 +41,7 @@ export default function ClientWrapper({ children }) {
                 } catch (error) {
                     console.error("Invalid token:", error);
                     localStorage.removeItem("token");
+                    localStorage.removeItem("user");
                     setHasToken(false);
                     router.push('/login');
                 }
@@ -64,9 +67,22 @@ export default function ClientWrapper({ children }) {
                 <AppSidebar />
                 <SidebarInset>
                     <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-                        <div className="flex items-center gap-2 px-4">
-                            <SidebarTrigger className="-ml-1" />
-                            <Separator orientation="vertical" className="mr-2 h-4" />
+                        <div className="flex items-center px-4">
+                            <div className="flex items-center gap-2">
+                                <SidebarTrigger className="-ml-1" />
+                                <Separator orientation="vertical" className="mr-2 h-4" />
+                            </div>
+                            <Button
+                                variant="primary"
+                                onClick={() => {
+                                    localStorage.removeItem("token");
+                                    localStorage.removeItem("user");
+                                    router.push('/login');
+                                    window.location.reload();
+                                }}
+                            >
+                                Log Out
+                            </Button>
                         </div>
                     </header>
                     {children}
