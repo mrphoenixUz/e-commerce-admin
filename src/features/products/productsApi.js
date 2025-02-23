@@ -16,7 +16,6 @@ export const productsApi = createApi({
   endpoints: (builder) => ({
     getProduct: builder.query({
       query: (id) => `/products/${id}`,
-      providesTags: (id) => [{ type: "Products", id }],
     }),
     deleteProduct: builder.mutation({
       query: (categoryId) => ({

@@ -14,22 +14,43 @@ import { useRouter } from "next/navigation";
 export default function ClientWrapper({ children }) {
     const [hasToken, setHasToken] = useState(false);
     const router = useRouter();
+
     useEffect(() => {
         const checkToken = () => {
             if (typeof window !== "undefined") {
                 const token = localStorage.getItem("token");
-                setHasToken(!!token);
+
                 if (!token) {
+                    setHasToken(false);
+                    router.push('/login');
+                    return;
+                }
+
+                try {
+                    const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT payload
+                    const isExpired = payload.exp * 1000 < Date.now();
+                    if (isExpired) {
+                        localStorage.removeItem("token");
+                        setHasToken(false);
+                        router.push('/login');
+                    } else {
+                        setHasToken(true);
+                    }
+                } catch (error) {
+                    console.error("Invalid token:", error);
+                    localStorage.removeItem("token");
+                    setHasToken(false);
                     router.push('/login');
                 }
             }
         };
+
         checkToken();
         window.addEventListener("storage", checkToken);
         return () => {
             window.removeEventListener("storage", checkToken);
         };
-    }, []);
+    }, [router]);
 
     if (!hasToken) return (
         <Provider store={store}>

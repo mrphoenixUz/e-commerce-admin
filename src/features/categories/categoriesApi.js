@@ -17,35 +17,33 @@ export const categoriesApi = createApi({
         getCategories: builder.query({
             query: () => '/categories',
         }),
-        // addToCart: builder.mutation({
-        //     query: (data) => ({
-        //         url: '/users/cart',
-        //         method: 'POST',
-        //         body: data,
-        //     }),
-        //     invalidatesTags: ['Cart'],
-        // }),
-        // updateCartItem: builder.mutation({
-        //     query: (data) => ({
-        //         url: '/users/cart',
-        //         method: 'PUT',
-        //         body: data,
-        //     }),
-        //     invalidatesTags: ['Cart'],
-        // }),
-        // removeFromCart: builder.mutation({
-        //     query: (productId) => ({
-        //         url: `/users/cart/${productId}`,
-        //         method: 'DELETE',
-        //     }),
-        //     invalidatesTags: ['Cart'],
-        // })
+        addCategory: builder.mutation({
+            query: (data) => ({
+                url: '/categories',
+                method: 'POST',
+                body: data,
+            }),
+        }),
+        updateCategory: builder.mutation({
+            query: ({ categoryId, category_name }) => ({
+                url: `/categories/${categoryId}`,
+                method: 'PUT',
+                body: { category_name },
+            }),
+            invalidatesTags: ['Category'],
+        }),
+        deleteCategory: builder.mutation({
+            query: (categoryId) => ({
+                url: `/categories/${categoryId}`,
+                method: 'DELETE',
+            }),
+        })
     }),
 });
 
 export const {
     useGetCategoriesQuery,
-    // useAddToCartMutation,
-    // useUpdateCartItemMutation,
-    // useRemoveFromCartMutation,
+    useAddCategoryMutation,
+    useUpdateCategoryMutation,
+    useDeleteCategoryMutation,
 } = categoriesApi;
