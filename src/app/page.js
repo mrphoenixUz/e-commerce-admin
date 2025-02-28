@@ -17,7 +17,7 @@ const WelcomePage = () => {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <Card className="cursor-pointer hover:bg-accent transition-colors">
             <CardHeader>
-              <CardTitle className="text-lg"><Link href={'products'}>Go to products page</Link></CardTitle>
+              <CardTitle className="text-lg"><Link href={'product'}>Go to products page</Link></CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
